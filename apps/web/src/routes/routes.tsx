@@ -4,6 +4,7 @@ import {
     DashboardCustomizeIcon,
     DevicesIcon,
     SettingsIcon,
+    TimelineIcon,
 } from '@milesight/shared/src/components';
 import ErrorBoundaryComponent from './error-boundary';
 
@@ -24,6 +25,9 @@ type RouteObjectType = RouteObject & {
 
         /** 是否无需登录便可访问，默认 `false` (需要登录) */
         authFree?: boolean;
+
+        /** 隐藏侧边栏 */
+        hideSidebar?: boolean;
     };
 
     /** 子路由 */
@@ -112,6 +116,41 @@ const routes: RouteObjectType[] = [
                     const { default: Component } = await import(
                         '@/pages/setting/views/integration-detail'
                     );
+                    return { Component };
+                },
+                ErrorBoundary,
+            },
+        ],
+    },
+    {
+        path: '/workflow',
+        element: <Outlet />,
+        ErrorBoundary,
+        handle: {
+            get title() {
+                return intl.get('common.label.workflow');
+            },
+            icon: <TimelineIcon fontSize="medium" />,
+        },
+        children: [
+            {
+                index: true,
+                async lazy() {
+                    const { default: Component } = await import('@/pages/workflow');
+                    return { Component };
+                },
+                ErrorBoundary,
+            },
+            {
+                path: 'editor',
+                handle: {
+                    get title() {
+                        return intl.get('common.label.editor');
+                    },
+                    hideSidebar: true,
+                },
+                async lazy() {
+                    const { default: Component } = await import('@/pages/workflow/views/editor');
                     return { Component };
                 },
                 ErrorBoundary,

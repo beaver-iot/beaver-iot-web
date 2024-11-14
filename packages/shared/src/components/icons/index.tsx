@@ -70,6 +70,8 @@ export {
     Share as ShareIcon,
     Https as HttpsIcon,
     AdsClick as AdsClickIcon,
+    Timeline as TimelineIcon,
+    SystemUpdateAlt as SystemUpdateAltIcon,
 } from '@mui/icons-material';
 
 export * from './iot-icons';
